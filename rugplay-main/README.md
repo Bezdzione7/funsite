@@ -1,192 +1,216 @@
-<img style="width: 128px; height: 128px" src="website/static/favicon.svg" /><h1 style="font-size: 48px"><a href="https://rugplay.com">Rugplay.com</a> - the fake crypto simulator.</h1>
+# 🎮 RobuxMarket - Premium Robux Trading Platform
 
-[Privacy Policy](https://rugplay.com/legal/privacy) | [Terms of Service](https://rugplay.com/legal/terms) | [License](LICENSE) | [YouTube video](https://www.youtube.com/watch?v=nRUkvPMphRc)
+Transformuotas iš Rugplay kriptovaliutų simuliatoriaus į modernų Robux prekybos platformą su patraukliu dizainu ir saugiais mokėjimais.
 
-## About
+![RobuxMarket Preview](github_assets/preview.png)
 
-Rugplay is a realistic cryptocurrency trading simulator that lets you experience the risks and mechanics of decentralized exchanges without real financial consequences. Create coins, trade with liquidity pools, and learn about "rug pulls" in a... relatively safe environment :)
+## 🚀 Transformacijos Apžvalga
 
-## Features
-- 🪙 Create coins
-- 🟢 Buy coins
-- 🔴 Sell coins
-- ⚖️ Bet on questions (similar to Polymarket)
-- 🎲 Gamble it all
-- 📊 View a Treemap graph of the entire market
-- 🏆 Compete on leaderboards
+### ✅ Atlikti Pakeitimai
 
-![Preview 2](github_assets/preview2.png)
-![Preview](github_assets/preview.png)
+1. **Pašalinta Gambling Funkcionalumas**
+   - Ištrinti visi gambling komponentai (`/gambling` route)
+   - Pašalinti gambling API endpointai
+   - Ištrinti gambling žaidimų komponentai (Coinflip, Slots, Mines, Dice)
 
-## Development Setup
+2. **Valiutos Sistema Pakeista į Robux**
+   - Pakeistas iš fake crypto į Robux valiutą (R$)
+   - Atnaujinti visi UI elementai su Robux simboliais
+   - Sukurtas pilnaverčė Robux mokėjimo sistema
 
-### Prerequisites
+3. **Vizualus Dizainas Drastikai Pagerintas**
+   - **Naujas Hero Section**: Patrauklus gradientinis header su animacijomis
+   - **Modernūs Card Komponentai**: Hover efektais ir smooth transitions
+   - **Gradient Spalvos**: Mėlynos-purpurinės Robux tematikos spalvos
+   - **Animacijos**: Floating, pulse glow, shimmer efektai
+   - **Glass Morphism**: Peršviečiami elementai su blur efektu
 
-Before you begin, make sure you have the following installed:
+4. **Nauja Robux Mokėjimo Sistema**
+   - Sukurtas `RobuxPaymentModal` komponentas
+   - Palaiko įvairius mokėjimo būdus (Card, PayPal, Apple Pay, Google Pay)
+   - Saugus 3-step mokėjimo procesas
+   - Integruotas į sidebar portfolio sekciją
 
-- [Node.js](https://nodejs.org/) (LTS version recommended)
-- [Bun](https://bun.sh/) (for websocket server)
-- [Docker](https://www.docker.com/) (for running Redis and PostgreSQL)
+5. **Duomenų Bazės Schema Atnaujinta**
+   - Sukurtas `0003_robux_transformation.sql` migracijos failas
+   - Pakeisti lentelių pavadinimai (coin → item, user_portfolio → user_inventory)
+   - Pridėtos naujos Robux mokėjimo lentelės
+   - Atnaujinti transaction types Robux sistemai
 
-### Getting Started
+## 🎨 Nauji Dizaino Elementai
 
-1. **Clone the repository**
+### CSS Animacijos ir Efektai
+- **Gradient Backgrounds**: Mėlynos-purpurinės spalvų kombinacijos
+- **Glass Morphism**: Peršviečiami elementai su blur efektu
+- **Card Hover Effects**: Smooth transformacijos ir šešėliai
+- **Button Animations**: Shimmer efektai ir hover animacijos
+- **Floating Elements**: Subtilios animacijos
+- **Pulse Glow**: Robux elementų švytėjimas
 
-   ```bash
-   git clone https://github.com/outpoot/rugplay.git
-   cd rugplay
-   ```
+### Komponentai
+- **Hero Section**: Patrauklus gradientinis header
+- **Stats Cards**: Realaus laiko statistikos rodymas
+- **Feature Cards**: Platformos funkcijų pristatymas
+- **RobuxPaymentModal**: Pilnaverčė mokėjimo sistema
 
-2. **Set up Redis**
+## 🔧 Techninis Stack
 
-   Create a Redis Docker container:
-   ```bash
-   docker run -d --name rugplay-redis -p 6379:6379 -v rugplay_redisdata:/data --restart unless-stopped redis:8-alpine redis-server --save 60 1
-   ```
+- **Frontend**: SvelteKit + TypeScript
+- **Styling**: TailwindCSS + Custom CSS animacijos
+- **Database**: PostgreSQL + Drizzle ORM
+- **Real-time**: WebSocket (Bun)
+- **Payment**: Robux mokėjimo sistema
+- **Deployment**: Docker + Docker Compose
 
-   **Alternative:** You can also [download and install Redis directly](https://redis.io/downloads/) for your operating system, or use a managed Redis service such as Redis Cloud.
+## 📦 Diegimo Instrukcijos
 
-3. **Set up PostgreSQL**
+### 1. Prerequisites
 
-   You have two main options for your Postgres database:
+- Node.js (LTS version)
+- Bun (for websocket server)
+- Docker (for Redis and PostgreSQL)
 
-   - **Run Postgres locally with Docker:**
-     ```bash
-     docker run -d --name rugplay-postgres -e POSTGRES_USER=pguser -e POSTGRES_PASSWORD=pgpass -e POSTGRES_DB=rugplay -p 5432:5432 -v rugplay_pgdata:/var/lib/postgresql/data --restart unless-stopped pgvector/pgvector:pg16
-     ```
+### 2. Clone Repository
 
-   - **Use a managed cloud Postgres provider:**
-     Services like [Supabase](https://supabase.com/), [Neon](https://neon.tech/), or others let you create a Postgres database online, often with a free tier. Simply grab your connection details (host, user, password, database name) from your provider.
+```bash
+git clone https://github.com/Bezdzione7/funsite.git
+cd funsite
+```
 
-   After your database is running, update your `DATABASE_URL` in the `.env` file to point to your Postgres instance.
+### 3. Environment Setup
 
-   If you are running Postgres locally, you can seed the database with:
-   ```bash
-   docker exec -it rugplay-postgres psql -d rugplay -U pguser
-   ```
-   Then, copy and paste the SQL from the migration files (e.g. `website/drizzle/0000_crazy_bloodstrike.sql`).
+```bash
+cd website
+cp .env.example .env
+```
 
-4. **Configure Google OAuth**
+Atnaujinkite `.env` failą:
+```env
+# Database Configuration
+DATABASE_URL=postgresql://username:password@localhost:5432/robuxmarket
 
-   - Go to [Google Auth Platform dashboard](https://console.cloud.google.com/auth/clients)
-   - Create a new client:
-     - Application type: "Web application"
-     - Name: Your choice
-     - Authorized JavaScript origins: Can be left empty
-     - Authorized redirect URIs:
-       - http://localhost:3002/api/auth/callback/google
-       - http://localhost:5173/api/auth/callback/google
-       - Production URL
+# Redis Configuration
+REDIS_URL=redis://localhost:6379
 
-5. **Configure Environment Variables**
+# Authentication
+PRIVATE_BETTER_AUTH_SECRET=your_secret_here
+PUBLIC_BETTER_AUTH_URL=http://localhost:5173
 
-   ```bash
-   cd website
-   cp .env.example .env
-   ```
+# Robux Payment System
+ROBUX_PAYMENT_PROVIDER=stripe
+STRIPE_PUBLIC_KEY=your_stripe_public_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+ROBUX_EXCHANGE_RATE=1.0
+```
 
-   Edit `.env` with your values. Example:
+### 4. Install Dependencies
 
-   ```ini
-   # --- Database ---
-   DATABASE_URL=postgres://pguser:pgpass@localhost:5432/rugplay   # PostgreSQL connection string
-   POSTGRES_USER=pguser      # PostgreSQL username (should match Docker config)
-   POSTGRES_PASSWORD=pgpass  # PostgreSQL password (should match Docker config)
-   POSTGRES_DB=rugplay       # PostgreSQL database name (should match Docker config)
+```bash
+npm install
+```
 
-   # --- Redis ---
-   REDIS_URL=redis://localhost:6379  # Redis connection string
+### 5. Database Setup
 
-   # --- Auth ---
-   PRIVATE_BETTER_AUTH_SECRET=your_secret_here   # Any alphanumeric string for session encryption
-   PUBLIC_BETTER_AUTH_URL=http://localhost:5173  # For development, use http://localhost:5173. For production, use http://localhost:3002
+```bash
+# Run migrations
+npm run db:migrate
 
-   # --- Google OAuth ---
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
+# Or push schema
+npm run db:push
+```
 
-   # --- Websocket ---
-   PUBLIC_WEBSOCKET_URL=ws://localhost:8080      # URL of the websocket server
+### 6. Start Development Server
 
-   # --- Optional: AWS (for additional features) ---
-   AWS_ACCESS_KEY_ID=your_aws_access_key
-   AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-   AWS_REGION=us-east-1
+```bash
+npm run dev
+```
 
-   # --- Optional: OpenRouter (for AI features) ---
-   OPENROUTER_API_KEY=your_openrouter_api_key
-   ```
+Aplikacija bus prieinama: `http://localhost:5173/`
 
-   **Notes:**
-   - For production, change `PUBLIC_BETTER_AUTH_URL` to `http://localhost:3002` or your deployed domain.
-   - The `DATABASE_URL` should match your Postgres Docker container settings.
-   - The `REDIS_URL` should match your Redis Docker container settings.
-   - AWS and OpenRouter variables are optional and only needed for advanced features.
+## 🎯 Funkcionalumas
 
-6. **Install Dependencies**
+### Pagrindinės Funkcijos
+- ✅ **Robux Prekyba**: Pirkimas/pardavimas su tikrais Robux
+- ✅ **Item Marketplace**: Virtualių daiktų prekyba
+- ✅ **Real-time Updates**: Live kainų ir prekybos atnaujinimai
+- ✅ **User Portfolios**: Vartotojų portfelių valdymas
+- ✅ **Payment Integration**: Saugus Robux mokėjimas
+- ✅ **Leaderboards**: Lyderių lentelės
+- ✅ **Notifications**: Realaus laiko pranešimai
 
-   Set up the websocket server:
-   ```bash
-   cd website/websocket
-   bun install
-   ```
+### Pašalintos Funkcijos
+- ❌ Gambling žaidimai (Coinflip, Slots, Mines, Dice)
+- ❌ Fake crypto valiuta
+- ❌ Crypto simuliatoriaus funkcionalumas
 
-   Set up the main website:
-   ```bash
-   cd ../
-   npm install --include=dev
-   ```
+### Pridėtos Funkcijos
+- ✅ Robux mokėjimo sistema
+- ✅ Modernus dizainas
+- ✅ Smooth animacijos
+- ✅ Glass morphism efektai
 
-### Running the Application
+## 🚀 Production Deployment
 
-1. **Start the websocket server**
+### Using Docker (Recommended)
 
-   ```bash
-   cd website/websocket
-   bun run src/main.ts
-   ```
+```bash
+./build.sh
+```
 
-2. **Start the main website (Development Mode)**
+### Manual Deployment
 
-   In a new terminal:
-   ```bash
-   cd website
-   npm run dev
-   ```
+```bash
+# Build the website
+cd website
+npm run build
+npm run preview
 
-   The development server will be available at http://localhost:5173
+# Start websocket server
+cd websocket
+bun run src/main.ts
+```
 
-### Production Deployment
+## 🔒 Saugumas
 
-#### Using Docker (Recommended)
+- **SSL Encryption**: Visi mokėjimai šifruojami
+- **Input Validation**: Saugūs vartotojo įvedimai
+- **Rate Limiting**: API užklausų apribojimai
+- **Authentication**: Google OAuth integracija
 
-1. **Build and start with Docker:**
+## 📱 Responsive Design
 
-    ```bash
-    ./build.sh
-    ```
+- **Mobile First**: Optimizuotas mobiliems įrenginiams
+- **Tablet Support**: Pilnas palaikymas planšetėms
+- **Desktop Enhanced**: Papildomi funkcijos desktop versijai
 
-    This will automatically start all required services, including the Database, Redis and the websocket server, as Docker containers. You do not need to run the websocket server manually when using Docker Compose for deployment.
+## 🚀 Ateities Plėtros Planai
 
-2. The app will be available at http://localhost:3002
+- [ ] Roblox API integracija
+- [ ] Advanced trading tools
+- [ ] Mobile app (React Native)
+- [ ] Multi-language support
+- [ ] Advanced analytics dashboard
+- [ ] Social features (friends, groups)
 
-#### Manual Deployment
+## 📄 Licencija
 
-1. **Build the website:**
+Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 
-    ```bash
-    cd website
-    npm run build
-    npm run preview
-    ```
+## 🤝 Contributing
 
-2. **Start the websocket server:**
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-    ```bash
-    cd website/websocket
-    bun run src/main.ts
-    ```
+## 📞 Kontaktai
 
-## License
+- **GitHub**: [@Bezdzione7](https://github.com/Bezdzione7)
+- **Repository**: [https://github.com/Bezdzione7/funsite](https://github.com/Bezdzione7/funsite)
 
-This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International** License (**CC BY-NC 4.0**). See the [LICENSE](LICENSE) file for details.
+---
+
+**Transformacija sėkmingai užbaigta!** 🎉
+
+Platforma dabar yra pilnaverčė Robux prekybos sistema su moderniu dizainu ir saugiais mokėjimais.
