@@ -309,7 +309,7 @@
 		animation: bounce 1s infinite;
 	}
 	
-	:global(@keyframes bounce) {
+	@keyframes bounce {
 		0%, 100% {
 			transform: translateY(-25%);
 			animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
