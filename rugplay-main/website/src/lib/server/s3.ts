@@ -2,118 +2,28 @@ import { S3Client, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } fro
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { processImage } from './image.js';
 
-// Optional S3 configuration - only initialize if environment variables are present
+// S3 is disabled for now - no environment variables needed
 let s3Client: S3Client | null = null;
 let bucketName: string | null = null;
 
-// Initialize S3 client if environment variables are available
-function initializeS3() {
-    try {
-        // Use dynamic imports to avoid build-time errors
-        const privateEnv = process.env;
-        const publicEnv = process.env;
-        
-        const PRIVATE_B2_KEY_ID = privateEnv.PRIVATE_B2_KEY_ID;
-        const PRIVATE_B2_APP_KEY = privateEnv.PRIVATE_B2_APP_KEY;
-        const PUBLIC_B2_BUCKET = publicEnv.PUBLIC_B2_BUCKET;
-        const PUBLIC_B2_ENDPOINT = publicEnv.PUBLIC_B2_ENDPOINT;
-        const PUBLIC_B2_REGION = publicEnv.PUBLIC_B2_REGION;
-        
-        if (PRIVATE_B2_KEY_ID && PRIVATE_B2_APP_KEY && PUBLIC_B2_BUCKET && PUBLIC_B2_ENDPOINT && PUBLIC_B2_REGION) {
-            bucketName = PUBLIC_B2_BUCKET;
-            s3Client = new S3Client({
-                endpoint: PUBLIC_B2_ENDPOINT,
-                region: PUBLIC_B2_REGION,
-                credentials: {
-                    accessKeyId: PRIVATE_B2_KEY_ID,
-                    secretAccessKey: PRIVATE_B2_APP_KEY
-                },
-                forcePathStyle: true,
-                requestChecksumCalculation: 'WHEN_REQUIRED',
-                responseChecksumValidation: 'WHEN_REQUIRED',
-            });
-        }
-    } catch (error) {
-        // S3 configuration not available - this is optional
-        console.log('S3 configuration not available - file uploads disabled');
-    }
-}
-
-// Initialize S3 on module load
-initializeS3();
-
 export async function generatePresignedUrl(key: string, contentType: string): Promise<string> {
-    if (!s3Client || !bucketName) {
-        throw new Error('S3 not configured - file uploads disabled');
-    }
-    
-    const command = new PutObjectCommand({
-        Bucket: bucketName,
-        Key: key,
-        ContentType: contentType
-    });
-
-    return getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1 hour
+    throw new Error('S3 not configured - file uploads disabled');
 }
 
 export async function deleteObject(key: string): Promise<void> {
-    if (!s3Client || !bucketName) {
-        throw new Error('S3 not configured - file operations disabled');
-    }
-    
-    const command = new DeleteObjectCommand({
-        Bucket: bucketName,
-        Key: key
-    });
-
-    await s3Client.send(command);
+    throw new Error('S3 not configured - file operations disabled');
 }
 
 export async function generateDownloadUrl(key: string): Promise<string> {
-    if (!s3Client || !bucketName) {
-        throw new Error('S3 not configured - file operations disabled');
-    }
-    
-    const command = new GetObjectCommand({
-        Bucket: bucketName,
-        Key: key
-    });
-
-    return getSignedUrl(s3Client, command, { expiresIn: 3600 });
+    throw new Error('S3 not configured - file operations disabled');
 }
 
 export async function uploadProfilePicture(
-    identifier: string, // Can be user ID or a unique ID from social provider
+    identifier: string,
     body: Uint8Array,
     contentType: string,
 ): Promise<string> {
-    if (!s3Client || !bucketName) {
-        throw new Error('S3 not configured - file uploads disabled');
-    }
-    
-    if (!contentType || !contentType.startsWith('image/')) {
-        throw new Error('Invalid file type. Only images are allowed.');
-    }
-
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-    if (!allowedTypes.includes(contentType.toLowerCase())) {
-        throw new Error('Unsupported image format. Only JPEG, PNG, GIF, and WebP are allowed.');
-    }
-
-    const processedImage = await processImage(Buffer.from(body));
-    
-    const key = `avatars/${identifier}.webp`;
-
-    const command = new PutObjectCommand({
-        Bucket: bucketName,
-        Key: key,
-        Body: processedImage.buffer,
-        ContentType: processedImage.contentType,
-        ContentLength: processedImage.size,
-    });
-
-    await s3Client.send(command);
-    return key;
+    throw new Error('S3 not configured - file uploads disabled');
 }
 
 export async function uploadCoinIcon(
@@ -121,33 +31,7 @@ export async function uploadCoinIcon(
     body: Uint8Array,
     contentType: string,
 ): Promise<string> {
-    if (!s3Client || !bucketName) {
-        throw new Error('S3 not configured - file uploads disabled');
-    }
-    
-    if (!contentType || !contentType.startsWith('image/')) {
-        throw new Error('Invalid file type. Only images are allowed.');
-    }
-
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-    if (!allowedTypes.includes(contentType.toLowerCase())) {
-        throw new Error('Unsupported image format. Only JPEG, PNG, GIF, and WebP are allowed.');
-    }
-
-    const processedImage = await processImage(Buffer.from(body));
-
-    const key = `coins/${coinSymbol.toLowerCase()}.webp`;
-
-    const command = new PutObjectCommand({
-        Bucket: bucketName,
-        Key: key,
-        Body: processedImage.buffer,
-        ContentType: processedImage.contentType,
-        ContentLength: processedImage.size,
-    });
-
-    await s3Client.send(command);
-    return key;
+    throw new Error('S3 not configured - file uploads disabled');
 }
 
 export { s3Client };
