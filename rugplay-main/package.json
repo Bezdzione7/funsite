@@ -1,0 +1,13 @@
+{
+  "name": "robuxmarket",
+  "version": "1.0.0",
+  "description": "RobuxMarket - A premium platform for trading virtual items with Robux",
+  "scripts": {
+    "build": "cd website && npm install && npm run build",
+    "start": "cd website && npm run start",
+    "dev": "cd website && npm run dev"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
