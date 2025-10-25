@@ -1,0 +1,56 @@
+# RobuxMarket Environment Variables for Vercel
+# Copy these to your Vercel project settings → Environment Variables
+
+# ===========================================
+# REQUIRED - App won't work without these
+# ===========================================
+
+# Database Configuration
+DATABASE_URL=postgresql://username:password@host:5432/robuxmarket
+
+# Authentication Secret (generate a random 32-character string)
+PRIVATE_BETTER_AUTH_SECRET=your_super_secret_auth_key_here_replace_with_random_string
+
+# Public Auth URL (replace with your actual Vercel app URL)
+PUBLIC_BETTER_AUTH_URL=https://your-app-name.vercel.app
+
+# ===========================================
+# OPTIONAL - For full functionality
+# ===========================================
+
+# Redis Configuration (optional - for real-time features)
+REDIS_URL=redis://username:password@host:6379
+
+# Google OAuth (optional - for Google sign-in)
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# Stripe Payment (optional - for Robux payments)
+STRIPE_PUBLIC_KEY=pk_test_your_stripe_public_key
+STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+
+# Robux Exchange Rate (optional - default is 1.0)
+ROBUX_EXCHANGE_RATE=1.0
+
+# AWS S3/B2 Storage (optional - for file uploads)
+PRIVATE_B2_KEY_ID=your_b2_key_id
+PRIVATE_B2_APP_KEY=your_b2_app_key
+PUBLIC_B2_BUCKET=your_bucket_name
+PUBLIC_B2_ENDPOINT=https://s3.us-west-002.backblazeb2.com
+PUBLIC_B2_REGION=us-west-002
+
+# OpenAI (optional - for AI features)
+OPENROUTER_API_KEY=your_openrouter_api_key
+
+# Websocket URL (optional - for real-time features)
+PUBLIC_WEBSOCKET_URL=wss://your-websocket-server.com
+
+# ===========================================
+# INSTRUCTIONS:
+# ===========================================
+# 1. Replace "your_super_secret_auth_key_here_replace_with_random_string" 
+#    with a random 32-character string
+# 2. Replace "https://your-app-name.vercel.app" with your actual Vercel URL
+# 3. Set up a PostgreSQL database and replace DATABASE_URL
+# 4. Optional variables can be added later for full functionality
+# 5. Copy these to Vercel Dashboard → Project Settings → Environment Variables
