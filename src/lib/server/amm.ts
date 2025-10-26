@@ -32,7 +32,7 @@ export async function calculate24hMetrics(coinId: number, currentPrice: number) 
             gte(transaction.timestamp, twentyFourHoursAgo)
         ));
 
-    const volume24h = volumeData.reduce((sum, tx) => sum + Number(tx.totalBaseCurrencyAmount), 0);
+    const volume24h = volumeData.reduce((sum: number, tx: any) => sum + Number(tx.totalBaseCurrencyAmount), 0);
 
     return { change24h: Number(change24h.toFixed(4)), volume24h: Number(volume24h.toFixed(4)) };
 }

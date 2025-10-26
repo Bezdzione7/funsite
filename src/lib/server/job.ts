@@ -40,7 +40,7 @@ export async function resolveExpiredQuestions() {
                 if (resolution.confidence < 50) {
                     console.log(`Cancelling question ${question.id} due to low confidence: ${resolution.confidence}`);
 
-                    await db.transaction(async (tx) => {
+                    await db.transaction(async (tx: any) => {
                         // Mark question as cancelled
                         await tx
                             .update(predictionQuestion)
@@ -127,7 +127,7 @@ export async function resolveExpiredQuestions() {
                     continue;
                 }
 
-                await db.transaction(async (tx) => {
+                await db.transaction(async (tx: any) => {
                     await tx
                         .update(predictionQuestion)
                         .set({
@@ -252,7 +252,7 @@ export async function processAccountDeletions() {
 
         for (const request of expiredRequests) {
             try {
-                await db.transaction(async (tx) => {
+                await db.transaction(async (tx: any) => {
                     const userId = request.userId;
 
                     await tx.update(transaction)
