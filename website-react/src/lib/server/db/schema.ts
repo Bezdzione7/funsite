@@ -20,7 +20,7 @@ export const user = pgTable("user", {
 		precision: 20,
 		scale: 8,
 	}).notNull().default("100.00000000"), // $100
-	bio: varchar("bio", { length: 160 }).default("Hello am 48 year old man from somalia. Sorry for my bed england. I selled my wife for internet connection for play "conter stirk""),
+	bio: varchar("bio", { length: 160 }).default("Hello am 48 year old man from somalia. Sorry for my bed england. I selled my wife for internet connection for play “conter stirk”"),
 	username: varchar("username", { length: 30 }).notNull().unique(),
 
 	volumeMaster: decimal("volume_master", { precision: 3, scale: 2 }).notNull().default("0.70"),
@@ -83,14 +83,14 @@ export const coin = pgTable("coin", {
 	id: serial("id").primaryKey(),
 	name: varchar("name", { length: 255 }).notNull(),
 	symbol: varchar("symbol", { length: 10 }).notNull().unique(),
-	icon: text("icon"),
-	creatorId: integer("creator_id").references(() => user.id, { onDelete: "set null", }),
+	icon: text("icon"), // New field for coin icon
+	creatorId: integer("creator_id").references(() => user.id, { onDelete: "set null", }), // Coin can exist even if creator is deleted
 	initialSupply: decimal("initial_supply", { precision: 30, scale: 8 }).notNull(),
 	circulatingSupply: decimal("circulating_supply", { precision: 30, scale: 8 }).notNull(),
-	currentPrice: decimal("current_price", { precision: 20, scale: 8 }).notNull(),
+	currentPrice: decimal("current_price", { precision: 20, scale: 8 }).notNull(), // Price in base currency
 	marketCap: decimal("market_cap", { precision: 30, scale: 2 }).notNull(),
 	volume24h: decimal("volume_24h", { precision: 30, scale: 2 }).default("0.00"),
-	change24h: decimal("change_24h", { precision: 30, scale: 4 }).default("0.0000"),
+	change24h: decimal("change_24h", { precision: 30, scale: 4 }).default("0.0000"), // Percentage
 	poolCoinAmount: decimal("pool_coin_amount", { precision: 30, scale: 8 }).notNull().default("0.00000000"),
 	poolBaseCurrencyAmount: decimal("pool_base_currency_amount", { precision: 30, scale: 8, }).notNull().default("0.00000000"),
 	createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -184,7 +184,7 @@ export const promoCode = pgTable('promo_code', {
 	code: varchar('code', { length: 50 }).notNull().unique(),
 	description: text('description'),
 	rewardAmount: decimal('reward_amount', { precision: 20, scale: 8 }).notNull(),
-	maxUses: integer('max_uses'),
+	maxUses: integer('max_uses'), // null = unlimited
 	isActive: boolean('is_active').notNull().default(true),
 	expiresAt: timestamp('expires_at', { withTimezone: true }),
 	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
@@ -207,7 +207,7 @@ export const predictionQuestion = pgTable("prediction_question", {
 	question: varchar("question", { length: 200 }).notNull(),
 	status: predictionMarketEnum("status").notNull().default("ACTIVE"),
 	resolutionDate: timestamp("resolution_date", { withTimezone: true }).notNull(),
-	aiResolution: boolean("ai_resolution"),
+	aiResolution: boolean("ai_resolution"), // true = YES, false = NO, null = unresolved
 	totalYesAmount: decimal("total_yes_amount", { precision: 20, scale: 8 }).notNull().default("0.00000000"),
 	totalNoAmount: decimal("total_no_amount", { precision: 20, scale: 8 }).notNull().default("0.00000000"),
 
@@ -229,7 +229,7 @@ export const predictionBet = pgTable("prediction_bet", {
 	id: serial("id").primaryKey(),
 	userId: integer("user_id").references(() => user.id, { onDelete: "set null" }),
 	questionId: integer("question_id").notNull().references(() => predictionQuestion.id, { onDelete: "cascade" }),
-	side: boolean("side").notNull(),
+	side: boolean("side").notNull(), // true = YES, false = NO
 	amount: decimal("amount", { precision: 20, scale: 8 }).notNull(),
 	actualWinnings: decimal("actual_winnings", { precision: 20, scale: 8 }),
 	createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -304,4 +304,3 @@ export const apikey = pgTable("apikey", {
 }, (table) => ({
 	userIdx: index("idx_apikey_user").on(table.userId)
 }));
-
