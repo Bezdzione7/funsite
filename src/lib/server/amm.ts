@@ -1,7 +1,7 @@
 import { db } from '@/lib/server/db';
-import { coin, transaction, priceHistory, userPortfolio } from '$lib/server/db/schema';
+import { coin, transaction, priceHistory, userPortfolio } from '@/lib/server/db/schema';
 import { eq, and, gte } from 'drizzle-orm';
-import { createNotification } from '$lib/server/notification';
+import { createNotification } from '@/lib/server/notification';
 
 export async function calculate24hMetrics(coinId: number, currentPrice: number) {
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
