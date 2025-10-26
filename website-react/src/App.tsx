@@ -1,44 +1,55 @@
-import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './routes/Home'
+import Market from './routes/Market'
+import Portfolio from './routes/Portfolio'
+import Settings from './routes/Settings'
+import Leaderboard from './routes/Leaderboard'
 import './style.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Rugplay - React + Vite
-        </h1>
-        <p className="text-lg text-gray-600 mb-8">
-          Welcome to the React version of Rugplay!
-        </p>
-        
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <button
-            onClick={() => setCount((count) => count + 1)}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-          >
-            count is {count}
-          </button>
-        </div>
+    <Router>
+      <div className="min-h-screen bg-gray-50">
+        <nav className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <div className="flex">
+                <div className="flex-shrink-0 flex items-center">
+                  <h1 className="text-xl font-bold text-gray-900">Rugplay</h1>
+                </div>
+                <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                  <a href="/" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    Market
+                  </a>
+                  <a href="/portfolio" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    Portfolio
+                  </a>
+                  <a href="/leaderboard" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    Leaderboard
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <a href="/settings" className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
+                  Settings
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
 
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">Status</h2>
-          <ul className="list-disc list-inside space-y-2 text-gray-700">
-            <li>✅ React + Vite setup</li>
-            <li>✅ TypeScript configured</li>
-            <li>✅ Tailwind CSS configured</li>
-            <li>✅ Database schema copied</li>
-            <li>⏳ Authentication setup (in progress)</li>
-            <li>⏳ Components migration (pending)</li>
-            <li>⏳ API routes (pending)</li>
-          </ul>
-        </div>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/market" element={<Market />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </main>
       </div>
-    </div>
+    </Router>
   )
 }
 
 export default App
-
