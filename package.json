@@ -36,6 +36,7 @@
     "drizzle-orm": "^0.44.7",
     "express": "^5.1.0",
     "lightweight-charts": "^5.0.9",
+    "lovable-tagger": "^1.1.11",
     "lucide-react": "^0.548.0",
     "openai": "^6.7.0",
     "postcss": "^8.5.6",
