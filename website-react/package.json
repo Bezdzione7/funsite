@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "db:push": "drizzle-kit push",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
     "@types/canvas-confetti": "^1.9.0",
@@ -21,6 +24,7 @@
     "@aws-sdk/client-s3": "^3.917.0",
     "@aws-sdk/s3-request-presigner": "^3.917.0",
     "@tanstack/react-query": "^5.90.5",
+    "@vitejs/plugin-react": "^5.1.0",
     "apexcharts": "^5.3.5",
     "autoprefixer": "^10.4.21",
     "better-auth": "^1.3.32",
@@ -33,6 +37,8 @@
     "openai": "^6.7.0",
     "postcss": "^8.5.6",
     "postgres": "^3.4.7",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.4",
     "redis": "^5.9.0",
     "sharp": "^0.34.4",
