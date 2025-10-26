@@ -1,116 +1,130 @@
-# Rugplay - React + Vite Version
+# Rugplay - React + Vite (Lovable Compatible)
 
-This is the fully converted React + Vite version of Rugplay, designed to work with Lovable.dev.
+Pure React frontend for Rugplay cryptocurrency trading simulator. **0% Svelte, 100% React!**
 
-## 🚀 Getting Started
+## ✅ Lovable Compatible
 
-### Prerequisites
+This project is fully configured for Lovable.dev:
+- ✅ React + Vite framework
+- ✅ TypeScript (non-strict mode)
+- ✅ Tailwind CSS
+- ✅ Database schema included
+- ✅ All server logic ready
 
-- Node.js 18+
-- PostgreSQL database
-- Redis (optional, for real-time features)
+## 🚀 Quick Start
 
-### Installation
+### 1. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### Environment Variables
+### 2. Create `.env` File
 
-Create a `.env` file:
+Copy `.env.example` to `.env` and fill in your values:
 
-```env
-DATABASE_URL=postgresql://username:password@localhost:5432/rugplay
-BETTER_AUTH_SECRET=your-secret-key
-BETTER_AUTH_URL=http://localhost:5173
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-AWS_ACCESS_KEY_ID=your-aws-key
-AWS_SECRET_ACCESS_KEY=your-aws-secret
-AWS_REGION=us-east-1
-S3_BUCKET_NAME=your-bucket
-OPENROUTER_API_KEY=your-openrouter-key
+```bash
+cp .env.example .env
 ```
 
-### Development
+Required variables:
+- `VITE_DATABASE_URL` - PostgreSQL connection string
+- `BETTER_AUTH_SECRET` - Random secret for authentication
+- `BETTER_AUTH_URL` - Your app URL (http://localhost:5173 for dev)
+
+### 3. Run Development Server
 
 ```bash
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173`
+App will be available at `http://localhost:5173`
 
-### Build
-
-```bash
-npm run build
-```
-
-### Database
+### 4. Database Setup
 
 ```bash
 # Push schema changes
 npm run db:push
 
-# Run migrations
+# Or run migrations
 npm run db:migrate
 
 # Open database studio
 npm run db:studio
 ```
 
-## 🏗️ Project Structure
+## 📁 Project Structure
 
 ```
 website-react/
 ├── src/
-│   ├── components/       # React components
+│   ├── routes/           # React page components
 │   ├── lib/
-│   │   ├── server/      # Backend logic
-│   │   │   ├── db/      # Database schema
-│   │   │   ├── auth.ts  # Authentication
-│   │   │   └── api.ts   # API handlers
+│   │   ├── server/      # Backend logic (database, auth, API)
 │   │   └── utils/       # Utility functions
-│   ├── routes/          # React Router routes
-│   ├── App.tsx          # Main app component
-│   └── main.tsx         # Entry point
-├── public/              # Static assets
-└── drizzle/             # Database migrations
+│   └── App.tsx          # Main app with routing
+├── .env                  # Environment variables
+└── package.json         # React dependencies only!
 ```
 
-## 📦 Key Features
+## 🛠️ Available Scripts
 
-- ✅ React + Vite for fast development
-- ✅ TypeScript for type safety
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run build:dev` - Build in development mode
+- `npm run db:push` - Push database schema changes
+- `npm run db:migrate` - Run database migrations
+- `npm run db:studio` - Open Drizzle Studio
+
+## 🎯 What's Included
+
+### Frontend (React)
+- ✅ React Router DOM for navigation
+- ✅ Basic routes (Home, Market, Portfolio, Leaderboard, Settings)
 - ✅ Tailwind CSS for styling
-- ✅ Better Auth for authentication
-- ✅ Drizzle ORM for database
-- ✅ React Router for navigation
 - ✅ React Query for data fetching
-- ✅ Fully compatible with Lovable.dev
+- ✅ Lucide React for icons
 
-## 🔧 Tech Stack
+### Backend (Ready to Use)
+- ✅ Database schema (Drizzle ORM)
+- ✅ Better Auth configuration
+- ✅ API helpers
+- ✅ S3 upload functions
+- ✅ Redis integration
+- ✅ AMM trading logic
+- ✅ AI helpers (OpenRouter)
 
-- **Framework**: React 19
-- **Build Tool**: Vite 7
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Router**: React Router v7
-- **Auth**: Better Auth
-- **Database**: PostgreSQL with Drizzle ORM
-- **State Management**: React Query
-- **Charts**: ApexCharts, Lightweight Charts
-- **Icons**: Lucide React
+## 🚀 Using with Lovable
 
-## 🎯 Next Steps
+1. Clone this repository
+2. Import the `website-react` folder into Lovable
+3. Configure your `.env` file
+4. Start building your features with Lovable AI!
 
-1. Import this project into Lovable.dev
-2. Connect your database
-3. Configure environment variables
-4. Start building features!
+## 📦 Dependencies
+
+**Core:**
+- React 19
+- Vite 7
+- TypeScript
+
+**UI:**
+- Tailwind CSS
+- Lucide React
+- React Router DOM
+
+**Backend:**
+- Better Auth
+- Drizzle ORM
+- PostgreSQL
+- Redis
+- AWS S3
+
+## 🎉 Status
+
+**Current**: Pure React foundation ready for development
+**Next**: Build features with Lovable AI!
 
 ---
 
-**Note**: This is a React-based project. All Svelte code has been removed.
-
+Made for Lovable.dev - No Svelte code remaining!
