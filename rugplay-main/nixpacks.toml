@@ -1,11 +1,14 @@
+[providers]
+node = "18"
+
 [phases.setup]
-nixPkgs = ["nodejs", "npm"]
+nixPkgs = ["nodejs_18", "npm"]
 
 [phases.install]
-cmds = ["cd website && npm install"]
+cmds = ["cd website && npm ci"]
 
 [phases.build]
 cmds = ["cd website && npm run build"]
 
 [start]
-cmd = "cd website && npm run start"
+cmd = "cd website && node build"

@@ -1,19 +1,21 @@
 import OpenAI from 'openai';
 import { zodResponseFormat } from 'openai/helpers/zod';
 import { z } from 'zod';
-import { OPENROUTER_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { db } from './db';
 import { coin, user, transaction, priceHistory } from './db/schema';
 import { eq, desc, sql, gte } from 'drizzle-orm';
 
-if (!OPENROUTER_API_KEY) {
-    throw new Error('OPENROUTER_API_KEY is not set – AI features are disabled.');
-}
+const OPENROUTER_API_KEY = env.OPENROUTER_API_KEY;
 
-const openai = new OpenAI({
-    baseURL: 'https://openrouter.ai/api/v1',
-    apiKey: OPENROUTER_API_KEY,
-});
+let openai: OpenAI | null = null;
+
+if (OPENROUTER_API_KEY) {
+    openai = new OpenAI({
+        baseURL: 'https://openrouter.ai/api/v1',
+        apiKey: OPENROUTER_API_KEY,
+    });
+}
 
 const MODELS = {
     STANDARD: 'google/gemini-2.0-flash-lite-001',
@@ -209,7 +211,7 @@ function extractCoinSymbols(text: string): string[] {
 }
 
 export async function validateQuestion(question: string, description?: string): Promise<QuestionValidationResult> {
-    if (!OPENROUTER_API_KEY) {
+    if (!openai) {
         return {
             isValid: false,
             requiresWebSearch: false,
@@ -280,6 +282,10 @@ Note: All coins use *SYMBOL format (e.g., *BTC, *DOGE). All trading is simulated
 Provide your response in the specified JSON format with a precise ISO 8601 datetime string for suggestedResolutionDate.
 `;
 
+    if (!openai) {
+        throw new Error('OpenRouter API is not configured');
+    }
+
     try {
         const completion = await openai.beta.chat.completions.parse({
             model: MODELS.STANDARD,
@@ -323,7 +329,7 @@ export async function resolveQuestion(
     requiresWebSearch: boolean,
     customRugplayData?: string
 ): Promise<QuestionResolutionResult> {
-    if (!OPENROUTER_API_KEY) {
+    if (!openai) {
         return {
             resolution: false,
             confidence: 0,
@@ -365,6 +371,10 @@ Examples of how to handle non-existent coins:
 
 Provide your response in the specified JSON format.
 `;
+
+    if (!openai) {
+        throw new Error('OpenRouter API is not configured');
+    }
 
     try {
         const completion = await openai.beta.chat.completions.parse({
